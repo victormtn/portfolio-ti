@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Victor Monteiro</title>
+    <style>
+        /* Reset básico */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            background-color: #000;
+            color: #fff;
+            overflow: hidden;
+        }
+
+        .container {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        header h1 {
+            font-size: 2rem;
+            color: #fff;
+            font-weight: bold;
+        }
+
+        header p {
+            font-size: 1rem;
+            color: #ccc;
+        }
+
+        .section h2 {
+            font-size: 1.5rem;
+            color: #fff;
+            margin-bottom: 8px;
+            border-bottom: 1px solid #444;
+            padding-bottom: 4px;
+            cursor: pointer;
+        }
+
+        .projects, .qualifications {
+            list-style: none;
+            padding: 0;
+            margin-top: 8px;
+        }
+
+        .projects li, .qualifications li {
+            font-size: 0.9rem;
+            color: #ccc;
+            margin-bottom: 8px;
+        }
+
+        footer {
+            font-size: 0.9rem;
+            color: #ccc;
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        /* Canvas para fundo animado */
+        canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+
+        /* Dropdown styles */
+        .dropdown-title {
+            cursor: pointer;
+            color: #fff;
+            font-size: 1.5rem;
+            margin-bottom: 8px;
+            border-bottom: 1px solid #444;
+            padding-bottom: 4px;
+        }
+
+        .dropdown-content {
+            display: none;
+            font-size: 0.9rem;
+            color: #ccc;
+            line-height: 1.6;
+        }
+
+        .dropdown-content p {
+            margin-bottom: 8px;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="backgroundCanvas"></canvas>
+    <div class="container">
+        <header>
+            <h1>Victor Monteiro</h1>
+            <p>Desenvolvedor Full Stack</p>
+        </header>
+
+        <section class="section">
+            <h2 class="dropdown-title" onclick="toggleDropdown('projects')">Projetos</h2>
+            <ul class="projects dropdown-content" id="projects">
+                <li><strong>Dashboard:</strong> Desenvolvimento de painéis interativos para monitoramento de indicadores em tempo real, com foco em desempenho e tomada de decisão.</li>
+                <li><strong>Aplicativos web (No code):</strong> Criação de soluções web funcionais e responsivas utilizando plataformas No Code, com foco em agilidade e usabilidade.</li>
+                <li><strong>Chatbots com Python:</strong> Implementação de chatbots inteligentes com Python para automatizar atendimentos e interações em plataformas digitais.</li>
+                <li><strong>Scripts para manipular e limpar dados:</strong> Criação de scripts automatizados para tratamento, transformação e padronização de dados visando análises precisas.</li>
+                <li><strong>Banco de Dados em Mysql e PostgreeSql:</strong> Modelagem, implementação e manutenção de bases de dados relacionais com foco em performance e integridade dos dados.</li>
+            </ul>
+        </section>
+
+        <section class="section">
+            <h2 class="dropdown-title" onclick="toggleDropdown('qualifications')">Qualificações</h2>
+            <ul class="qualifications dropdown-content" id="qualifications">
+                <li><strong>Suporte Técnico:</strong> Experiência em atendimento e resolução de problemas técnicos, com foco em infraestrutura, redes e manutenção de sistemas.</li>
+                <li><strong>Python Intermediário:</strong> Domínio de estruturas de dados, bibliotecas populares e desenvolvimento de scripts para automação e análise de dados.</li>
+                <li><strong>Experiência com IA e Machine Learning:</strong> Aplicação de modelos de aprendizado de máquina em projetos práticos, com uso de bibliotecas como Scikit-learn e TensorFlow.</li>
+                <li><strong>Python Web e Django Framework:</strong> Desenvolvimento de aplicações web escaláveis com Django, utilizando boas práticas de organização e segurança.</li>
+                <li><strong>Conhecimento em MySQL, PostgreSQL e SQL Server:</strong> Criação e manutenção de bancos de dados relacionais, com foco em consultas otimizadas e integridade dos dados.</li>
+                <li><strong>Conhecimento em PHP, HTML e CSS:</strong> Desenvolvimento front-end e back-end de aplicações web, com foco em interfaces responsivas e integração com sistemas dinâmicos.</li>
+                <li><strong>Inglês Intermediário:</strong> Consigo me comunicar, ler documentação e consumir conteúdo técnico com autonomia.</li>
+            </ul>
+        </section>
+
+        <footer>
+            <p>&copy; 2025 victormtn@gmail.com. Todos os direitos reservados.</p>
+        </footer>
+
+        <div class="about-me" style="position: fixed; bottom: 20px; right: 20px; text-align: right;">
+            <h2 class="dropdown-title" onclick="toggleDropdown('aboutMe')" style="font-size: 1.2rem; margin-bottom: 5px;">Sobre Mim</h2>
+            <div class="dropdown-content" id="aboutMe" style="font-size: 0.9rem; color: #ccc; line-height: 1.4;">
+                <p>Me chamo Victor Monteiro, tenho 25 anos e sou estudante de Análise e Desenvolvimento de Sistemas.</p>
+                <p>Sou curioso, autodidata e estou sempre em busca de aprender mais, especialmente na área de tecnologia.</p>
+                <p>Boa parte do meu conhecimento foi conquistada explorando a internet e colocando a mão na massa.</p>
+                <p>Disciplinado e focado, levo isso também para outras áreas da minha vida — sou praticante de artes marciais, apaixonado por jogos, livros e mangás.</p>
+                <p>Acredito que essas experiências ajudam a desenvolver tanto a criatividade quanto a persistência que levo para meus projetos.</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function toggleDropdown(id) {
+            const content = document.getElementById(id);
+            content.style.display = content.style.display === 'none' ? 'block' : 'none';
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            document.querySelectorAll('.dropdown-content').forEach(content => {
+                content.style.display = 'none';
+            });
+        });
+
+        // Fundo animado com partículas
+        const canvas = document.getElementById('backgroundCanvas');
+        const ctx = canvas.getContext('2d');
+
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        const particlesArray = [];
+        const numberOfParticles = 100;
+
+        class Particle {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.size = Math.random() * 3 + 1;
+                this.speedX = Math.random() * 1 - 0.5;
+                this.speedY = Math.random() * 1 - 0.5;
+            }
+
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+
+                if (this.x < 0 || this.x > canvas.width) this.speedX *= -1;
+                if (this.y < 0 || this.y > canvas.height) this.speedY *= -1;
+            }
+
+            draw() {
+                ctx.fillStyle = 'rgba(255, 255, 255, 0.8)';
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.closePath();
+                ctx.fill();
+            }
+        }
+
+        function init() {
+            for (let i = 0; i < numberOfParticles; i++) {
+                particlesArray.push(new Particle());
+            }
+        }
+
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            particlesArray.forEach(particle => {
+                particle.update();
+                particle.draw();
+            });
+            requestAnimationFrame(animate);
+        }
+
+        init();
+        animate();
+
+        // Ajustar o canvas ao redimensionar a janela
+        window.addEventListener('resize', () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        });
+    </script>
+</body>
+</html>
