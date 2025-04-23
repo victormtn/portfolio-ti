@@ -195,7 +195,7 @@
                 <p>Me chamo Victor Monteiro, tenho 25 anos e sou estudante de Análise e Desenvolvimento de Sistemas.</p>
                 <p>Sou curioso, autodidata e estou sempre em busca de aprender mais, especialmente na área de tecnologia.</p>
                 <p>Boa parte do meu conhecimento foi conquistada explorando a internet e colocando a mão na massa.</p>
-                <p>Disciplinado e focado, levo isso também para outras áreas da minha vida — sou praticante de artes marciais, apaixonado por jogos, livros e mangás.</p>
+                <p>Disciplinado e focado, levo isso também para outras áreas da minha vida — sou praticante de artes marciais, e  gosto de jogos e livros.</p>
                 <p>Acredito que essas experiências ajudam a desenvolver tanto a criatividade quanto a persistência que levo para meus projetos.</p>
             </div>
         </div>
@@ -213,7 +213,7 @@
             });
         });
 
-        // Fundo animado com partículas
+        // Fundo animado com partículas que seguem o cursor
         const canvas = document.getElementById('backgroundCanvas');
         const ctx = canvas.getContext('2d');
 
@@ -222,6 +222,16 @@
 
         const particlesArray = [];
         const numberOfParticles = 100;
+        let mouse = {
+            x: null,
+            y: null
+        };
+
+        // Atualiza a posição do mouse
+        canvas.addEventListener('mousemove', (event) => {
+            mouse.x = event.clientX;
+            mouse.y = event.clientY;
+        });
 
         class Particle {
             constructor() {
@@ -230,14 +240,39 @@
                 this.size = Math.random() * 3 + 1;
                 this.speedX = Math.random() * 1 - 0.5;
                 this.speedY = Math.random() * 1 - 0.5;
+                this.baseX = this.x;
+                this.baseY = this.y;
             }
 
             update() {
+                // Movimento normal
                 this.x += this.speedX;
                 this.y += this.speedY;
 
+                // Reverte direção ao atingir bordas
                 if (this.x < 0 || this.x > canvas.width) this.speedX *= -1;
                 if (this.y < 0 || this.y > canvas.height) this.speedY *= -1;
+
+                // Movimento em direção ao cursor
+                const dx = mouse.x - this.x;
+                const dy = mouse.y - this.y;
+                const distance = Math.sqrt(dx * dx + dy * dy);
+                const maxDistance = 100;
+
+                if (distance < maxDistance) {
+                    const force = (maxDistance - distance) / maxDistance;
+                    const directionX = dx / distance;
+                    const directionY = dy / distance;
+
+                    this.x -= directionX * force * 5;
+                    this.y -= directionY * force * 5;
+                } else {
+                    // Retorna à posição original
+                    const dx = this.baseX - this.x;
+                    const dy = this.baseY - this.y;
+                    this.x += dx * 0.05;
+                    this.y += dy * 0.05;
+                }
             }
 
             draw() {
