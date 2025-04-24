@@ -143,6 +143,74 @@
         .dropdown-content a {
             text-decoration: none;
         }
+
+        /* Responsividade para telas menores */
+        @media (max-width: 768px) {
+            body {
+                font-size: 0.9rem; /* Reduz o tamanho da fonte */
+            }
+
+            .container {
+                padding: 10px; /* Reduz o espaçamento interno */
+            }
+
+            header h1 {
+                font-size: 1.5rem; /* Reduz o tamanho do título */
+            }
+
+            header p {
+                font-size: 0.9rem; /* Reduz o tamanho do subtítulo */
+            }
+
+            .section h2 {
+                font-size: 1.2rem; /* Reduz o tamanho dos títulos das seções */
+            }
+
+            .dropdown-content {
+                font-size: 0.8rem; /* Reduz o tamanho do texto nas listas */
+            }
+
+            .dropdown-content li {
+                margin-bottom: 6px; /* Reduz o espaçamento entre os itens */
+            }
+
+            button {
+                padding: 8px 16px; /* Reduz o tamanho dos botões */
+                font-size: 0.9rem; /* Ajusta o tamanho da fonte dos botões */
+            }
+
+            .about-me {
+                bottom: 10px; /* Ajusta a posição da seção "Sobre Mim" */
+                right: 10px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            header h1 {
+                font-size: 1.2rem; /* Reduz ainda mais o tamanho do título */
+            }
+
+            .container {
+                padding: 5px; /* Reduz o espaçamento interno para telas muito pequenas */
+            }
+
+            .section h2 {
+                font-size: 1rem; /* Ajusta o tamanho dos títulos das seções */
+            }
+
+            .dropdown-content {
+                font-size: 0.7rem; /* Reduz o tamanho do texto nas listas */
+            }
+
+            button {
+                padding: 6px 12px; /* Reduz ainda mais o tamanho dos botões */
+                font-size: 0.8rem; /* Ajusta o tamanho da fonte dos botões */
+            }
+
+            .about-me {
+                font-size: 0.8rem; /* Ajusta o tamanho do texto na seção "Sobre Mim" */
+            }
+        }
     </style>
 </head>
 <body>
