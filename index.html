@@ -144,6 +144,53 @@
             text-decoration: none;
         }
 
+        /* Estilo para o fundo do pop-up */
+        .popup-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            display: none; /* Esconde o pop-up por padrão */
+            z-index: 1000;
+        }
+
+        /* Estilo para o conteúdo do pop-up */
+        .popup-content {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: #222;
+            color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            max-width: 90%;
+            max-height: 80%;
+            overflow-y: auto;
+            z-index: 1001;
+        }
+
+        /* Botão de fechar */
+        .popup-close {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: #444;
+            color: #fff;
+            border: none;
+            padding: 5px 10px;
+            cursor: pointer;
+            border-radius: 4px;
+            font-size: 0.9rem;
+        }
+
+        .popup-close:hover {
+            background: #555;
+        }
+
         /* Responsividade para telas menores */
         @media (max-width: 768px) {
             body {
@@ -222,7 +269,7 @@
         </header>
 
         <section class="section">
-            <h2 class="dropdown-title" onclick="toggleDropdown('projects')">Projetos</h2>
+            <h2 class="dropdown-title" onclick="openPopup('projects')">Projetos</h2>
             <ul class="projects dropdown-content" id="projects">
                 <li><strong>Dashboard:</strong> Desenvolvimento de painéis interativos para monitoramento de indicadores em tempo real, com foco em desempenho e tomada de decisão.</li>
                 <li><strong>Aplicativos web (No code):</strong> Criação de soluções web funcionais e responsivas utilizando plataformas No Code, com foco em agilidade e usabilidade.</li>
@@ -233,7 +280,7 @@
         </section>
 
         <section class="section">
-            <h2 class="dropdown-title" onclick="toggleDropdown('qualifications')">Qualificações</h2>
+            <h2 class="dropdown-title" onclick="openPopup('qualifications')">Qualificações</h2>
             <ul class="qualifications dropdown-content" id="qualifications">
                 <li><strong>Suporte Técnico:</strong> Experiência em atendimento e resolução de problemas técnicos, com foco em infraestrutura, redes e manutenção de sistemas.</li>
                 <li><strong>Python Intermediário:</strong> Domínio de estruturas de dados, bibliotecas populares e desenvolvimento de scripts para automação e análise de dados.</li>
@@ -267,7 +314,7 @@
         </section>
 
         <section class="section">
-            <h2 class="dropdown-title" onclick="toggleDropdown('detailedProjects')">Projetos Detalhados</h2>
+            <h2 class="dropdown-title" onclick="openPopup('detailedProjects')">Projetos Detalhados</h2>
             <ul class="detailed-projects dropdown-content" id="detailedProjects">
                 <li>
                     <strong>Nome do Projeto:</strong> Especialidades e Serviços Hospítalares<br>
@@ -285,7 +332,7 @@
         </section>
 
         <section class="section">
-            <h2 class="dropdown-title" onclick="toggleDropdown('contactInfo')">Contato</h2>
+            <h2 class="dropdown-title" onclick="openPopup('contactInfo')">Contato</h2>
             <ul class="contact-info dropdown-content" id="contactInfo">
                 <li>
                     <img src="https://img.icons8.com/ios-filled/20/ffffff/phone.png" alt="Telefone" style="vertical-align: middle; margin-right: 8px;">
@@ -311,13 +358,22 @@
         </footer>
 
         <div class="about-me" style="position: fixed; bottom: 20px; right: 20px; text-align: right;">
-            <h2 class="dropdown-title" onclick="toggleDropdown('aboutMe')" style="font-size: 1.2rem; margin-bottom: 5px;">Sobre Mim</h2>
+            <h2 class="dropdown-title" onclick="openPopup('aboutMe')" style="font-size: 1.2rem; margin-bottom: 5px;">Sobre Mim</h2>
             <div class="dropdown-content" id="aboutMe" style="font-size: 0.9rem; color: #ccc; line-height: 1.4;">
                 <p>Me chamo Victor Monteiro, tenho 25 anos e sou estudante de Análise e Desenvolvimento de Sistemas.</p>
                 <p>Sou curioso, autodidata e estou sempre em busca de aprender mais, especialmente na área de tecnologia.</p>
                 <p>Boa parte do meu conhecimento foi conquistada explorando a internet e colocando a mão na massa.</p>
                 <p>Disciplinado e focado, levo isso também para outras áreas da minha vida — sou praticante de artes marciais, e  gosto de jogos e livros.</p>
                 <p>Acredito que essas experiências ajudam a desenvolver tanto a criatividade quanto a persistência que levo para meus projetos.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="popup-overlay" id="popup">
+        <div class="popup-content">
+            <button class="popup-close" onclick="closePopup()">Fechar</button>
+            <div id="popup-body">
+                <!-- O conteúdo do dropdown será carregado aqui -->
             </div>
         </div>
     </div>
@@ -428,6 +484,19 @@
             canvas.width = window.innerWidth;
             canvas.height = window.innerHeight;
         });
+
+        function closePopup() {
+            document.getElementById('popup').style.display = 'none';
+        }
+
+        function openPopup(contentId) {
+            const popup = document.getElementById('popup');
+            const popupBody = document.getElementById('popup-body');
+            const content = document.getElementById(contentId).innerHTML;
+
+            popupBody.innerHTML = content; // Carrega o conteúdo do dropdown no pop-up
+            popup.style.display = 'block'; // Mostra o pop-up
+        }
     </script>
 </body>
 </html>
